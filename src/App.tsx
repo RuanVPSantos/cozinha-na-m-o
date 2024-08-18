@@ -8,6 +8,38 @@ import './styles.css';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme.material';
 import { MultiValue } from 'react-select';
+import { StylesConfig } from 'react-select';
+
+const customSelectStyles: StylesConfig<IngredientOption, true> = {
+    control: (provided) => ({
+        ...provided,
+        fontFamily: 'Poppins, sans-serif',
+    }),
+    option: (provided) => ({
+        ...provided,
+        fontFamily: 'Poppins, sans-serif',
+    }),
+    singleValue: (provided) => ({
+        ...provided,
+        fontFamily: 'Poppins, sans-serif',
+    }),
+    input: (provided) => ({
+        ...provided,
+        fontFamily: 'Poppins, sans-serif',
+    }),
+    menu: (provided) => ({
+        ...provided,
+        fontFamily: 'Poppins, sans-serif',
+    }),
+    multiValue: (provided) => ({
+        ...provided,
+        fontFamily: 'Poppins, sans-serif',
+    }),
+    placeholder: (provided) => ({
+        ...provided,
+        fontFamily: 'Poppins, sans-serif',
+    }),
+};
 
 const App: React.FC = () => {
     const [selectedIngredients, setSelectedIngredients] = useState<MultiValue<IngredientOption>>([]);
@@ -17,7 +49,6 @@ const App: React.FC = () => {
     useEffect(() => {
         const fetchInitialMarkdown = async () => {
             try {
-                // Simular o conteúdo Markdown inicial (se necessário)
                 const text = "";
                 setMarkdownContent(text);
             } catch (error) {
@@ -33,7 +64,6 @@ const App: React.FC = () => {
             setLoading(true);
     
             setSelectedIngredients([]);
-            
     
             const response = await fetch(`${import.meta.env.VITE_API_URL}`, {
                 method: 'POST',
@@ -49,10 +79,8 @@ const App: React.FC = () => {
                 throw new Error('Erro na requisição');
             }
     
-            // Parse the JSON response
             const data = await response.json();
     
-            // Check if 'recipe' key exists in the response
             if (data.recipe) {
                 setMarkdownContent(data.recipe);
             } else {
@@ -78,6 +106,7 @@ const App: React.FC = () => {
                 options={ingredients}
                 value={selectedIngredients}
                 onChange={setSelectedIngredients}
+                styles={customSelectStyles} // Passando os estilos customizados
             />
             <Button 
                 variant="contained" 
