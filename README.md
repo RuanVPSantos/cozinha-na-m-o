@@ -1,50 +1,29 @@
-# React + TypeScript + Vite
+---
+title: Vite React (TS)
+description: Example Vite app that is configured with React and Typescipt
+tags:
+  - vite
+  - react
+  - typescript
+---
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Vite + React + Typescript Example
+This example utilises vite for static site generation
 
-Currently, two official plugins are available:
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/duzltn?referralCode=OH27A5)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## Expanding the ESLint configuration
+- Vite
+- React
+- TypeScript
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 💁‍♀️ How to use
 
-- Configure the top-level `parserOptions` property like this:
+- Install dependencies `yarn`
+- Connect to your Railway project `railway link`
+- Start the development server `railway run yarn dev`
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 📝 Notes
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+The project is directly derived from the standard creation with some extra configuration to make sure it is quick and easy to get started on hosting your next site with railway. 
