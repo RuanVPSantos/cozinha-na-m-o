@@ -8,38 +8,7 @@ import './styles.css';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme.material';
 import { MultiValue } from 'react-select';
-import { StylesConfig } from 'react-select';
-
-const customSelectStyles: StylesConfig<IngredientOption, true> = {
-    control: (provided) => ({
-        ...provided,
-        fontFamily: 'Poppins, sans-serif',
-    }),
-    option: (provided) => ({
-        ...provided,
-        fontFamily: 'Poppins, sans-serif',
-    }),
-    singleValue: (provided) => ({
-        ...provided,
-        fontFamily: 'Poppins, sans-serif',
-    }),
-    input: (provided) => ({
-        ...provided,
-        fontFamily: 'Poppins, sans-serif',
-    }),
-    menu: (provided) => ({
-        ...provided,
-        fontFamily: 'Poppins, sans-serif',
-    }),
-    multiValue: (provided) => ({
-        ...provided,
-        fontFamily: 'Poppins, sans-serif',
-    }),
-    placeholder: (provided) => ({
-        ...provided,
-        fontFamily: 'Poppins, sans-serif',
-    }),
-};
+import { fetchRecipe } from './api';
 
 const App: React.FC = () => {
     const [selectedIngredients, setSelectedIngredients] = useState<MultiValue<IngredientOption>>([]);
@@ -49,7 +18,7 @@ const App: React.FC = () => {
     useEffect(() => {
         const fetchInitialMarkdown = async () => {
             try {
-                const text = "";
+                const text: string = "";
                 setMarkdownContent(text);
             } catch (error) {
                 console.error('Erro ao buscar o arquivo Markdown:', error);
@@ -62,31 +31,12 @@ const App: React.FC = () => {
     const handleFindRecipe = async () => {
         try {
             setLoading(true);
-    
             setSelectedIngredients([]);
-    
-            const response = await fetch(`${import.meta.env.VITE_API_URL}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    q: selectedIngredients.map(option => option.value)
-                })
-            });
-    
-            if (!response.ok) {
-                throw new Error('Erro na requisição');
-            }
-    
-            const data = await response.json();
-    
-            if (data.recipe) {
-                setMarkdownContent(data.recipe);
-            } else {
-                console.error('Resposta inesperada:', data);
-                setMarkdownContent('Erro: resposta inesperada.');
-            }
+
+            const data = await fetchRecipe(selectedIngredients);
+
+            // Ensure markdownContent is always a string
+            setMarkdownContent(data.recipe || 'Nenhuma receita encontrada.');
         } catch (error) {
             console.error('Erro ao buscar a receita:', error);
             setMarkdownContent('Erro ao buscar a receita.');
@@ -94,40 +44,37 @@ const App: React.FC = () => {
             setLoading(false);
         }
     };
-    
+
 
     return (
-      <ThemeProvider theme={theme}>
-        <Container maxWidth="sm" style={{ paddingTop: 32 }}>
-            <Typography variant="h4" gutterBottom>
-                Selecione Ingredientes
-            </Typography>
-            <IngredientSelect
-                options={ingredients}
-                value={selectedIngredients}
-                onChange={setSelectedIngredients}
-                styles={customSelectStyles} // Passando os estilos customizados
-            />
-            <Button 
-                variant="contained" 
-                color="primary" 
-                onClick={handleFindRecipe}
-                fullWidth
-                style={{ marginTop: 16 }}
-            >
-                Encontrar Receita
-            </Button>
-            {loading ? (
-                <Skeleton variant="rectangular" width="100%" height={400} style={{ marginTop: 16 }} />
-            ) : (
-                markdownContent && (
+        <ThemeProvider theme={theme}>
+            <Container maxWidth="sm" style={{ paddingTop: 32 }}>
+                <Typography variant="h4" gutterBottom>
+                    Selecione Ingredientes
+                </Typography>
+                <IngredientSelect
+                    options={ingredients}
+                    value={selectedIngredients}
+                    onChange={setSelectedIngredients}
+                />
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleFindRecipe}
+                    fullWidth
+                    style={{ marginTop: 16 }}
+                >
+                    Encontrar Receita
+                </Button>
+                {loading ? (
+                    <Skeleton variant="rectangular" width="100%" height={400} style={{ marginTop: 16 }} />
+                ) : (
                     <Paper style={{ padding: 16, marginTop: 16 }}>
                         <MarkdownViewer content={markdownContent} />
                     </Paper>
-                )
-            )}
-        </Container>
-      </ThemeProvider>
+                )}
+            </Container>
+        </ThemeProvider>
     );
 };
 

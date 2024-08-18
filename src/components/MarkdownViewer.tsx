@@ -1,6 +1,7 @@
-import React from 'react';
-import { marked } from 'marked';
-import './MarkdownViewer.css'; // Assumindo que você tem um arquivo CSS para o componente
+import React, { useEffect, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import './MarkdownViewer.css';
+import PropTypes from 'prop-types';
 
 interface MarkdownViewerProps {
     content: string;
@@ -8,11 +9,14 @@ interface MarkdownViewerProps {
 
 const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
     return (
-        <div
-            className="markdown-viewer"
-            dangerouslySetInnerHTML={{ __html: marked(content) }}
-        />
+        <div className="markdown-viewer">
+            <ReactMarkdown>{content}</ReactMarkdown>
+        </div>
     );
+};
+
+MarkdownViewer.propTypes = {
+    content: PropTypes.string.isRequired,
 };
 
 export default MarkdownViewer;

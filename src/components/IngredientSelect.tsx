@@ -1,11 +1,12 @@
-import React from 'react';
-import Select, { MultiValue } from 'react-select';
-import { IngredientOption } from '../types';
+import React, { Dispatch, SetStateAction } from 'react';
+import Select, { MultiValue, StylesConfig } from 'react-select';
+import { IngredientOption } from '../types'; // Corrigir o caminho conforme necessário
+import { customSelectStyles } from '../styles/customSelectStyles'; // Corrigir o caminho conforme necessário
 
 interface IngredientSelectProps {
-    options: IngredientOption[];
+    options: { value: string; label: string; }[];
     value: MultiValue<IngredientOption>;
-    onChange: (value: MultiValue<IngredientOption>) => void;
+    onChange: Dispatch<SetStateAction<MultiValue<IngredientOption>>>;
 }
 
 const IngredientSelect: React.FC<IngredientSelectProps> = ({ options, value, onChange }) => {
@@ -20,19 +21,7 @@ const IngredientSelect: React.FC<IngredientSelectProps> = ({ options, value, onC
                 IndicatorSeparator: () => null, // Remove the separator
                 DropdownIndicator: () => null // Remove the indicator
             }}
-            styles={{
-                control: (provided) => ({
-                    ...provided,
-                    marginTop: 8,
-                    marginBottom: 16,
-                    minHeight: 56,
-                    borderRadius: 8,
-                }),
-                menu: (provided) => ({
-                    ...provided,
-                    borderRadius: 8,
-                }),
-            }}
+            styles={customSelectStyles} // Usando os estilos customizados
         />
     );
 };

@@ -15,14 +15,15 @@
     "marked": "^14.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-select": "^5.8.0",
-    "styles": "link:@mui/material/styles"
+    "react-markdown": "^9.0.1",
+    "react-select": "^5.8.0"
   },
   "devDependencies": {
+    "@types/node": "^22.4.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
-    "@vitejs/plugin-react": "^1.3.0",
-    "typescript": "^4.6.3",
-    "vite": "^2.9.9"
+    "@vitejs/plugin-react": "^4.3.1",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.1"
   }
 }
